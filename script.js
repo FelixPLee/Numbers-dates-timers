@@ -259,3 +259,11 @@ console.log(Math.ceil(1.1))
 console.log(Math.floor(1.9))
 console.log((Math.PI).toFixed(2))
 
+const future = new Date (2037, 10, 19, 15,23)
+console.log(future)
+console.log(future.getFullYear)
+console.log(future.getMonth)
+console.log(future.getSeconds)
+console.log(future.getTime)
+
+future.setFullYear(2028)
