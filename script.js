@@ -185,12 +185,31 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+  const startLogOutTimer = function() {
+    // set tome to 5 minutes
+    let time = 300
+    const tick = function() {
+      const min = String(Math.trunc(time / 60)).padStart(2,0)
+      const sec = String(time % 60).padStart(2,0)
+      // print ramaining time in the UI
+      labelTimer.textContent = `${min}:${sec}`
+      
+      //when 0 seconds,stop timer and log out the user
+      if (time === 0) {
+        clearInterval(timer)
+        containerApp.style.opacity = 0
+        labelWelcome.textContent = 'Log in to get started'
+      }
+      time--
+    }
+    tick()
+    // call the timer every second
+    const timer = setInterval(tick, 1000)
+    return timer
+  }
 ///////////////////////////////////////
 // Event handlers
-let currentAccount = account1;
-updateUI(currentAccount)
-containerApp.style.opacity = 100
-
+let currentAccount , timer
 
 /////////////// NOW DATE
 //const now = new Date()
@@ -234,6 +253,10 @@ labelDate.textContent = new Intl.DateTimeFormat(currentAccount.locale, options).
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    //Timer
+    if(timer) clearInterval(timer)
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -264,6 +287,10 @@ btnTransfer.addEventListener('click', function (e) {
     // Update UI
     updateUI(currentAccount);
 
+    //Resset timer
+    clearInterval(timer)
+    timer = startLogOutTimer();
+
   }
 });
 
@@ -285,6 +312,10 @@ btnLoan.addEventListener('click', function (e) {
   }, 2500)
 }
   inputLoanAmount.value = '';
+
+      //Resset timer
+      clearInterval(timer)
+      timer = startLogOutTimer();
 });
 
 btnClose.addEventListener('click', function (e) {
@@ -315,6 +346,7 @@ btnSort.addEventListener('click', function (e) {
   e.preventDefault();
   displayMovements(currentAccount, !sorted);
   sorted = !sorted;
+  clearInterval(timer)
 });
 
 /////////////////////////////////////////////////
