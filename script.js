@@ -121,7 +121,6 @@ const displayMovements = function (acc, sort = false) {
       const displayDate  =formatMovementDate(date, acc.locale)
 
       const formattedMov = fomratCur(obj.movement, acc.locale, acc.currency)
-      console.log(formattedMov)
 
     const html = `
       <div class="movements__row">
@@ -274,7 +273,8 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
+    setTimeout(function(){
+      // Add movement
     currentAccount.movements.push(amount);
 
     //Add loan date
@@ -282,7 +282,8 @@ btnLoan.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
-  }
+  }, 2500)
+}
   inputLoanAmount.value = '';
 });
 
@@ -341,3 +342,20 @@ const calcDaysPassed = (date1, date2) => Math.abs(date2 - date1) / (1000*60*60*2
 
 const days1 = calcDaysPassed(new Date(2034,4,1), new Date(2034,4,11))
 console.log(days1)
+
+//Timer
+//const palavras = ['tempo', 'perdido']
+//const tempoPerdido = setTimeout((a, b) => console.log(`${a} ${b}`),
+//5000,
+//...palavras)
+//console.log('esperando')
+//if (palavras.includes('perdido')) clearTimeout(tempoPerdido)
+
+setInterval(function(){
+  const now = new Date()
+  const clock = new Intl.DateTimeFormat('pt-BR', {hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  }).format(now)
+  console.log(clock)
+},1000)
