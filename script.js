@@ -122,18 +122,25 @@ const displayMovements = function (acc, sort = false) {
 
       const formattedMov = fomratCur(obj.movement, acc.locale, acc.currency)
 
-    const html = `
-      <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
-        <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${formattedMov}</div>
-      </div>
-    `;
-
-    containerMovements.insertAdjacentHTML('afterbegin', html);
+    // const html = `
+    //   <div class="movements__row">
+    //     <div class="movements__type movements__type--${type}">${
+    //   i + 1
+    // } ${type}</div>
+    //     <div class="movements__date">${displayDate}</div>
+    //     <div class="movements__value">${formattedMov}</div>
+    //   </div>
+    // `;
+    //containerMovements.insertAdjacentHTML('afterbegin', html);
+      const newMov = document.createElement('div')
+      newMov.classList.add("movements__row")
+      newMov.innerHTML = `
+            <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+            <div class="movements__date">${displayDate}</div>
+            <div class="movements__value">${formattedMov}</div>`
+      containerMovements.prepend(newMov)
   });
+
 };
 
 const calcDisplayBalance = function (acc) {
